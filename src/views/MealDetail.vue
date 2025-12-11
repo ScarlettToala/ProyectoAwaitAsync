@@ -44,23 +44,29 @@ watch(data, (nuevo) => {
     <div v-else class="data">
         <!--Existeinxen les dades?-->
         <div v-if="data && data.meals">
-            <div v-for="meal in data.meals">
-                <h2>{{ meal.strMeal }}</h2>
-                <img :src="`${meal.strMealThumb}`" :alt="`Foto de ${meal.strMealThumb}`">
+            <div v-for="meal in data.meals" class="meal-card">
 
-                <div v-if="ingredients.length">
+                <h2>{{ meal.strMeal }}</h2>
+
+                <img class="meal-image" :src="meal.strMealThumb" :alt="`Foto de ${meal.strMeal}`">
+
+                <div v-if="ingredients.length" class="ingredients-container">
                     <h3>Ingredients</h3>
 
                     <ul>
                         <li v-for="item in ingredients" :key="item.ingredient">
-                            {{ item.measure }} — {{ item.ingredient }}
+                            <strong>{{ item.measure }}</strong> — {{ item.ingredient }}
                         </li>
                     </ul>
                 </div>
 
-                <p>Video de Youtube</p>
-                <video :src="`${meal.strYoutube}`" width="320" height="240" controls></video>
+                <div class="video-section">
+                    <p>Video de YouTube</p>
+                    <video :src="meal.strYoutube" controls></video>
+                </div>
+
             </div>
+
         </div>
 
         <div v-else> No hi ha registre</div>
@@ -69,109 +75,132 @@ watch(data, (nuevo) => {
 </template>
 
 <style scoped>
+/* Fondo suave */
+body,
+.data {
+    background: #faf7f2;
+}
+
 /* Título principal */
 h1 {
     text-align: center;
-    font-size: 32px;
-    margin: 20px 0;
-    font-weight: bold;
-    color: #333;
+    font-size: 34px;
+    margin: 25px 0;
+    font-weight: 800;
+    color: #3a2e27;
+    letter-spacing: 1px;
 }
 
-/* Mensajes de carga o error */
-.loading {
+/* Loading & error */
+.loading,
+.error {
     text-align: center;
     font-size: 20px;
-    color: #555;
 }
 
 .error {
-    text-align: center;
-    font-size: 18px;
-    color: red;
+    color: #ff4d4d;
     font-weight: bold;
 }
 
-/* Contenedor principal de la receta */
+/* Contenedor principal */
 .data {
-    max-width: 800px;
-    margin: 20px auto;
-    padding: 15px;
-}
-
-/* Cada meal */
-.data>div[v-for] {
-    background: #fff;
-    border-radius: 14px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    max-width: 900px;
+    margin: 0 auto;
     padding: 20px;
-    margin-bottom: 25px;
-    text-align: center;
 }
 
-/* Imagen del plato */
-img {
+/* Card principal del Meal */
+.meal-card {
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 25px;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+    margin-bottom: 30px;
+    text-align: center;
+    transition: 0.25s ease;
+}
+
+.meal-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+}
+
+/* Imagen destacada */
+.meal-image {
     width: 100%;
-    max-width: 400px;
-    border-radius: 12px;
-    margin: 10px auto;
+    max-width: 420px;
+    border-radius: 15px;
+    margin: 15px auto;
     display: block;
 }
 
 /* Nombre del plato */
 h2 {
-    font-size: 28px;
-    font-weight: 700;
-    margin: 15px 0;
-    color: #222;
+    font-size: 30px;
+    color: #2d1e15;
+    font-weight: 800;
+    margin-bottom: 10px;
 }
 
-/* Título de ingredientes */
+/* Sección de ingredientes */
+.ingredients-container {
+    margin-top: 20px;
+    text-align: left;
+}
+
 h3 {
-    font-size: 20px;
-    font-weight: 600;
-    margin: 15px 0 10px;
-    color: #444;
+    font-size: 22px;
+    color: #4a372d;
+    font-weight: 700;
+    margin-bottom: 10px;
 }
 
-/* Lista de ingredientes */
+/* Lista bonita */
 ul {
-    list-style: none;
     padding: 0;
-    margin: 0 auto;
-    max-width: 350px;
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 10px;
 }
 
 li {
-    background: #f9f9f9;
-    margin: 6px 0;
-    padding: 8px 12px;
-    border-radius: 8px;
-    text-align: left;
-    font-size: 16px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    background: #fff6e9;
+    padding: 10px 12px;
+    border-radius: 10px;
+    border-left: 4px solid #ff9f43;
+    font-size: 15px;
+    color: #4a3b32;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
 }
 
 /* Video */
+.video-section {
+    margin-top: 25px;
+}
+
+.video-section p {
+    font-weight: 600;
+    color: #3a2e27;
+    margin-bottom: 8px;
+    font-size: 18px;
+}
+
 video {
-    margin-top: 15px;
-    border-radius: 12px;
     max-width: 100%;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    box-shadow: 0 5px 16px rgba(0, 0, 0, 0.15);
 }
 
 /* Responsive */
 @media (max-width: 600px) {
     h2 {
-        font-size: 22px;
+        font-size: 24px;
     }
 
-    h3 {
-        font-size: 18px;
-    }
-
-    li {
-        font-size: 14px;
+    ul {
+        grid-template-columns: 1fr;
     }
 }
 </style>

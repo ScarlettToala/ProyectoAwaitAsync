@@ -5,12 +5,19 @@ import { ref } from 'vue'
 import { useFetch } from '@/composable/useFetch.js'
 import { useRoute } from 'vue-router'
 import MealCard from '@/components/MealCard.vue'
+import SearchBar from '@/components/SearchBar.vue'
 
 const route = useRoute();
 const cerca = route.params.category
 const url = ref(`https://www.themealdb.com/api/json/v1/1/search.php?s=${cerca}`)
+
 //Para llamarlo si o si se debe hacer asi
 const { data, error, loading, fetchData } = useFetch(url);
+
+function buscarCategoria(info) {
+  //Cmabiamos la url que ya existe 
+  url.value = `https://www.themealdb.com/api/json/v1/1/search.php?s=${info}`
+}
 
 </script>
 
@@ -21,14 +28,17 @@ const { data, error, loading, fetchData } = useFetch(url);
   <div v-else-if="error">{{ error }}</div>
   <div v-else>
     <h3>Pinto la llista</h3>
+    <!--Seach-->
+
+    <SearchBar @meal="buscarCategoria"></SearchBar>
+
     <!--Si existeixen les receptes-->
     <div v-if="data && data.meals">
 
       <div class="containerReceptesDetall">
 
-        <div v-for="meal in data.meals" :key="meal.idMeal">
-          <MealCard 
-            :meal="meal">
+        <div v-for="meal in data.meals" :key="meal.idMeal" class="meal">
+          <MealCard :meal="meal">
           </MealCard>
         </div>
 
@@ -41,6 +51,15 @@ const { data, error, loading, fetchData } = useFetch(url);
 </template>
 
 <style scoped>
+* {
+  background-color: rgb(233, 212, 255);
+}
+
+.meal {
+  border: rgb(255, 255, 255) solid 5px;
+  border-radius: 5px;
+}
+
 h1 {
   text-align: center;
   margin: 20px 0;
@@ -64,5 +83,4 @@ h3 {
   max-width: 1200px;
   margin: auto;
 }
-
 </style>

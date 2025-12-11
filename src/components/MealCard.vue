@@ -17,18 +17,17 @@ const props = defineProps(
           <p>{{ props.meal.strMeal }}</p>
           <p>{{ props.meal.strArea }} - {{ props.meal.strCategory }}</p>
 </RouterLink>
-
-
 </template>
 
 <style scoped>
-h1 {
-  display: none; /* ocultamos el título “MealCard” */
-}
 
-/* 📦 Tarjeta */
-:deep(a) {
-  display: block;
+a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;   /* CENTRA horizontal */
+  justify-content: center; /* CENTRA vertical */
+  text-align: center;    /* Centra el texto */
+  
   background: #ffffff;
   border-radius: 14px;
   padding: 15px;
@@ -46,11 +45,11 @@ h1 {
 
 /* Imagen del plato */
 img {
-  width: 100%;
-  border-radius: 12px;
+  width: 80%;
+  border-radius: 15px;
   margin-bottom: 10px;
+  display: block;
 }
-
 /* Nombre del plato */
 p:first-of-type {
   font-size: 20px;
