@@ -1,0 +1,1 @@
+/*Teien que hacer un emit PAra saber que ha hecho click en elo botón de buscar por lo tanto actulizacmos el input con la nueva categoria */ 

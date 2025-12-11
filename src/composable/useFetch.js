@@ -1,4 +1,4 @@
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 
 export function useFetch(url) {
 
@@ -27,6 +27,7 @@ export function useFetch(url) {
     }
 
     onMounted(fetchData);//Es un disparador que avisa que hasta no se monte el componente no se ejecutará la función
+    watch(url, fetchData)   // <--- ESTA LÍNEA ES LO IMPORTANTE
 
     return { data, error, loading, fetchData}
 }

@@ -1,3 +1,3 @@
 <template>
-<h1> No se encontró rresultado</h1>    
+<h1> Error en la apliacación</h1>    
 </template>
